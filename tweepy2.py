@@ -13,6 +13,7 @@ class MyStreamListener(tweepy.StreamListener):
     def on_status(self, tweet):
         print(f"{tweet.user.name}:{tweet.text}")
         with open("tweets.json", "w") as outfile:
+            print(f"{tweet.user.name}: {tweet.text}")
             tweets["data"].append(f"{tweet.user.name}: {tweet.text}")
             json.dump(tweets, outfile)
 
@@ -32,4 +33,4 @@ api = tweepy.API(auth, wait_on_rate_limit=True,
 
 tweets_listener = MyStreamListener(api)
 stream = tweepy.Stream(api.auth, tweets_listener)
-stream.filter(track=["jetblue", "JetBlue", "#jetblue"], languages=["en"])
+stream.filter(track=["JetBlue", "jetblue"], languages=["en"])
